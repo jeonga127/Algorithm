@@ -1,34 +1,29 @@
 import java.util.*;
 
 class Solution {
-    public Collection<String> solution(String[] players, String[] callings){
-        String[] answer = {};
-        HashMap<String, Integer> pl_idx = new HashMap<>();
-        HashMap<Integer, String> idx_pl = new HashMap<>();
-        
-        int idx = 1;
-        for(String p : players){
-            pl_idx.put(p, idx);
-            idx ++;
+    public Collection<String> solution(String[] players, String[] callings) {
+        HashMap<String, Integer> playerMap = new HashMap<>();
+        int n = players.length;
+        for (int i = 0; i < n; i++) {
+            playerMap.put(players[i], i);
         }
-        
-        idx = 1;
-        for(String p : players){
-            idx_pl.put(idx, p);
-            idx ++;
+
+        ArrayList<String> indices = new ArrayList<>();
+        for (String c : callings) {
+            int c_idx = playerMap.get(c);
+            int prev_idx = (c_idx - 1 + n) % n;
+            int next_idx = (c_idx + 1) % n;
+            String prev_player = players[prev_idx];
+            players[prev_idx] = c;
+            players[c_idx] = prev_player;
+            playerMap.put(prev_player, c_idx);
+            playerMap.put(c, prev_idx);
         }
-        
-        for(String c : callings){
-            int c_rank = pl_idx.get(c);
-            String front = idx_pl.get(c_rank-1);
-            
-            pl_idx.put(c,c_rank-1);
-            idx_pl.put(c_rank-1,c);
-            
-            pl_idx.put(front,c_rank);
-            idx_pl.put(c_rank, front);
+
+        for (int i = 0; i < n; i++) {
+            indices.add(players[i]);
         }
-        
-        return idx_pl.values();
+
+        return indices;
     }
 }
