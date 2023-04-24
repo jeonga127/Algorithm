@@ -1,6 +1,9 @@
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static int checkRow(int[][] map, int tmpX){
@@ -29,39 +32,37 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Map<Integer, Point> search = new HashMap<Integer, Point>();
         int[][] map = new int[5][5];
+
         int answer = 0;
         int bingo = 0;
 
         for(int i = 0; i < 5; i++){
             String[] tmpMap = br.readLine().split(" ");
             for(int j = 0; j < 5; j ++){
+                search.put(Integer.parseInt(tmpMap[j]), new Point(i,j));
                 map[i][j] = Integer.parseInt(tmpMap[j]);
             }
         }
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 5; i++) {
             String[] tmpMap = br.readLine().split(" ");
-            for(int j = 0; j < 5; j ++){
+            for (int j = 0; j < 5; j++) {
                 int target = Integer.parseInt(tmpMap[j]);
+                Point current = search.get(target);
+                map[current.x][current.y] = 0;
+                answer ++;
 
-                for(int p = 0; p < 5; p++){
-                    for(int q = 0; q < 5; q++){
-                        if(map[p][q] == target){
-                            map[p][q] = 0;
-                            answer ++;
-                            bingo += checkRow(map, p) + checkColumn(map, q);
-                            if( p == q ) bingo += checkDiagonal(map);
-                            if( p + q == 4) bingo += checkDiagonal2(map);
-                            if(bingo >= 3){
-                                System.out.println(answer);
-                                return;
-                            }
-                        }
-                    }
+                bingo += checkRow(map, current.x) + checkColumn(map, current.y);
+                if( current.x == current.y ) bingo += checkDiagonal(map);
+                if(current.x + current.y == 4) bingo += checkDiagonal2(map);
+                if(bingo >= 3){
+                    System.out.println(answer);
+                    return;
                 }
             }
         }
-
     }
+
 }
