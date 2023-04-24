@@ -13,8 +13,8 @@ public class Main {
         String num = br.readLine();
         int N = Integer.parseInt(num);
 
-        String[][] map1 = new String[N][N];
-        String[][] map2 = new String[N][N];
+        String[][] map1 = new String[N][N]; // 지뢰 정보 맵
+        String[][] map2 = new String[N][N]; // 사용자 입력 맵
         String[][] answer = new String[N][N];
         List<Point> savePoint = new ArrayList<Point>();
 
@@ -27,10 +27,10 @@ public class Main {
             map1[i] = br.readLine().split("");
             for(int j = 0; j < map1[i].length; j++){
                 if(map1[i][j].equals("*"))
-                    savePoint.add(new Point(i,j));
+                    savePoint.add(new Point(i,j)); // m개인 list
             }
         }
-        
+
         // map2 (사용자 입력 맵) 받아오기
         for(int i = 0; i < N; i++)
             map2[i] = br.readLine().split("");
@@ -38,7 +38,7 @@ public class Main {
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 // 1. 지뢰를 찾은 경우
-                if(map2[i][j].equals("x") && map1[i][j].equals("*")){
+                if(map2[i][j].equals("x") && map1[i][j].equals("*") && answer[i][j].equals(".")){
                     for(Point p : savePoint)
                         answer[p.x][p.y] = "*";
                 }
