@@ -8,16 +8,15 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         String S = br.readLine();
-        Set<String> suffixes = new HashSet<>();
+        List<String> suffixes = new ArrayList<>();
 
         for(int i = 0; i < S.length(); i++){
             suffixes.add(S.substring(i));
         }
 
-        List<String> answers = new ArrayList<>(suffixes);
-        Collections.sort(answers);
+        Collections.sort(suffixes);
 
-        for(String s : answers)
+        for(String s : suffixes)
             sb.append(s).append("\n");
         System.out.println(sb);
     }
