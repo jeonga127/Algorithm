@@ -24,6 +24,11 @@ public class Main {
             score[0][1] = sticker[0][0];
             score[1][1] = sticker[1][0];
 
+            // 각각의 스티커는 두 가지 선택지를 가짐
+            // 1. 바로 대각선에 위치한 스티커으로부터 선택받거나 (sticker[(p + 1) % 2][q - 1])
+            // 2. 그 전 대각선에 위치한 스티커를 선택받거나 (sticker[(p + 1) % 2][q - 2])
+            // => 그 중 더 큰 점수를 갖는 스티커를 고르면 되는 문제!
+
             for (int q = 2; q < N + 1; q++) {
                 for (int p = 0; p < 2; p++) {
                     score[p][q] = Math.max(score[(p + 1) % 2][q - 2], score[(p + 1) % 2][q - 1]) + sticker[p][q-1];
