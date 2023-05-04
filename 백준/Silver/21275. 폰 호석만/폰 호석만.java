@@ -41,7 +41,7 @@ public class Main {
                     xB += B[j] * Math.pow(i, (double) B.length - j - 1);
                 }
 
-                if (xB < Long.MAX_VALUE && mapA.containsKey(xB)) {
+                if (xB < Long.MAX_VALUE && mapA.containsKey(xB) && mapA.get(xB) != i){
                     if (answer == null) {
                         answer = xB;
                         mapB.put(xB, i);
@@ -66,7 +66,7 @@ public class Main {
                     xA += A[j] * Math.pow(i, (double) A.length - j - 1);
                 }
 
-                if (xA < Long.MAX_VALUE && mapB.containsKey(xA)) {
+                if (xA < Long.MAX_VALUE && mapB.containsKey(xA) && mapB.get(xA) != i) {
                     if (answer == null) {
                         answer = xA;
                         mapA.put(xA, i);
