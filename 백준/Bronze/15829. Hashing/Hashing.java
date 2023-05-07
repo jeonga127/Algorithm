@@ -12,7 +12,7 @@ public class Main {
         for (int i = 0; i < L; i++)
             arr[i] = input[i].charAt(0) - 'a' + 1;
 
-        int H = 0;
+        long H = 0;
         for (int i = 0; i < L; i++) {
             H += arr[i] * Math.pow(31, i);
         }
