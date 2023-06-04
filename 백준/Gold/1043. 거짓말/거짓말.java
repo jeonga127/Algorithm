@@ -12,18 +12,15 @@ public class Main {
         int parentX = find(x);
         int parentY = find(y);
 
-        if (parentX < parentY) {
+        if (parentX < parentY)
             parent[parentY] = parentX;
-            parent[y] = parentX;
-        } else if (parentX > parentY) {
+        else if (parentX > parentY)
             parent[parentX] = parentY;
-            parent[x] = parentY;
-        }
     }
 
     public static int find(int x) {
         if (parent[x] == x) return x;
-        return find(parent[x]);
+        return parent[x] = find(parent[x]);
     }
 
     public static void main(String[] args) throws IOException {
@@ -68,15 +65,12 @@ public class Main {
             }
         }
 
-        for (int i = 1; i < N + 1; i++)
-            parent[i] = find(i);
-
         int answer = 0;
         for (int i = 1; i < M + 1; i++) {
             boolean truthCheck = false;
 
             for (Integer g : party[i]) {
-                if (parent[g] == parent[truthStandard]) {
+                if (find(g) == find(truthStandard)) {
                     truthCheck = true;
                     break;
                 }
