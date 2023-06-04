@@ -21,22 +21,25 @@ class Town implements Comparable<Town> {
 public class Main {
     static List<Town>[] graph;
     static int[] answer;
+    static boolean[] visited;
     static int UNDEFINED = Integer.MAX_VALUE;
 
     public static int dijkstra(int start, int end) {
         Arrays.fill(answer, UNDEFINED);
+        Arrays.fill(visited, false);
 
         PriorityQueue<Town> queue = new PriorityQueue<>();
         queue.add(new Town(start, 0));
 
         while (!queue.isEmpty()) {
             Town target = queue.poll();
-            
+            visited[target.num] = true;
+
             if (target.num == end)
                 break;
 
             for (Town town : graph[target.num]) {
-                if (answer[town.num] > target.time + town.time) {
+                if (!visited[town.num] && answer[town.num] > target.time + town.time) {
                     answer[town.num] = target.time + town.time;
                     queue.add(new Town(town.num, answer[town.num]));
                 }
@@ -54,6 +57,7 @@ public class Main {
         int X = Integer.parseInt(st.nextToken()); // 파티 장소
 
         answer = new int[N + 1];
+        visited = new boolean[N + 1];
         graph = new ArrayList[N + 1];
         for (int i = 1; i < N + 1; i++)
             graph[i] = new ArrayList<>();
