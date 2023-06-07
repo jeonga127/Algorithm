@@ -4,17 +4,17 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 class Town implements Comparable<Town>{
-    long num;
-    long people;
+    int num;
+    int people;
 
-    Town(long num, long people){
+    Town(int num, int people){
         this.num = num;
         this.people = people;
     }
 
     @Override
     public int compareTo(Town o) {
-        return Long.compare(this.num, o.num);
+        return Integer.compare(this.num, o.num);
     }
 }
 
@@ -26,7 +26,7 @@ public class Main {
 
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            townInfo.add(new Town(Long.parseLong(st.nextToken()), Long.parseLong(st.nextToken())));
+            townInfo.add(new Town(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
         }
 
         long total = townInfo.stream().mapToLong(x->x.people).sum();
