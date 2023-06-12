@@ -33,12 +33,13 @@ class BinarySearchTree {
         return parent;
     }
 
-    void postOrder(Node root){
+    StringBuilder postOrder(Node root, StringBuilder sb){
         if(root != null){
-            postOrder(root.leftNode);
-            postOrder(root.rightNode);
-            System.out.println(root.value);
+            postOrder(root.leftNode, sb);
+            postOrder(root.rightNode, sb);
+            sb.append(root.value).append("\n");
         }
+        return sb;
     }
 }
 
@@ -50,6 +51,6 @@ public class Main {
 
         while ((tmp = br.readLine()) != null && !tmp.isEmpty())
             bst.insert(Integer.parseInt(tmp));
-        bst.postOrder(bst.root);
+        System.out.print(bst.postOrder(bst.root, new StringBuilder()));
     }
 }
