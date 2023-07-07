@@ -3,18 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-class Computer implements Comparable<Computer> {
+class Computer {
     int start;
     int end;
 
     Computer(int start, int end) {
         this.start = start;
         this.end = end;
-    }
-
-    @Override
-    public int compareTo(Computer o) {
-        return Integer.compare(this.start, o.start);
     }
 }
 
@@ -33,25 +28,21 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        PriorityQueue<Computer> comQueue = new PriorityQueue<>();
+        PriorityQueue<Computer> comQueue = new PriorityQueue<>(Comparator.comparingInt(computer -> computer.start));
         PriorityQueue<Seat> endQueue = new PriorityQueue<>(Comparator.comparingInt(seat -> seat.end));
         PriorityQueue<Integer> availableSeat = new PriorityQueue<>();
 
         int N = Integer.parseInt(br.readLine());
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
-
-            comQueue.add(new Computer(start, end));
+            comQueue.add(new Computer(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
         }
 
         Map<Integer, Integer> seat = new TreeMap<>();
 
         while (!comQueue.isEmpty()) {
             Computer target = comQueue.poll();
-            
+
             while(!endQueue.isEmpty() && endQueue.peek().end < target.start)
                 availableSeat.add(endQueue.poll().number);
 
