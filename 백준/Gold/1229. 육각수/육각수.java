@@ -28,12 +28,11 @@ public class Main {
             idx += 1;
         }
 
-        for(int hexNum : hexNumList){
-            for(int i = hexNum; i < N + 1; i++)
+        for (int hexNum : hexNumList) {
+            for (int i = hexNum + 1; i < N + 1; i++)
                 dp[i] = Math.min(dp[i], dp[i - hexNum] + 1);
         }
 
         System.out.print(dp[N]);
     }
-
 }
