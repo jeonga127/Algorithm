@@ -11,8 +11,8 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
 
         int[] dp = new int[N + 1];
-        for (int i = 1; i < Math.min(N + 1, 6); i++)
-            dp[i] = i;
+        for (int i = 1; i < N + 1; i++)
+            dp[i] = i < 6 ? i : Integer.MAX_VALUE;
 
         int idx = 1;
         int nearHexNum;
@@ -28,19 +28,9 @@ public class Main {
             idx += 1;
         }
 
-        for (int i = 6; i < N + 1; i++) {
-            if (dp[i] > 0)
-                continue;
-
-            int min = Integer.MAX_VALUE;
-
-            for (int hexNum : hexNumList) {
-                if (hexNum > i || min == 1)
-                    break;
-                min = Math.min(min, dp[i - hexNum]);
-            }
-
-            dp[i] = min + 1;
+        for(int hexNum : hexNumList){
+            for(int i = hexNum; i < N + 1; i++)
+                dp[i] = Math.min(dp[i], dp[i - hexNum] + 1);
         }
 
         System.out.print(dp[N]);
