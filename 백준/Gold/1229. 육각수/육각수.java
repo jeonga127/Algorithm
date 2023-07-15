@@ -32,10 +32,10 @@ public class Main {
         for (int i = 1; i < Math.min(N + 1, 6); i++)
             dp[i] = i;
 
-        if (N < 6) {
-            System.out.print(dp[N]);
-            return;
-        }
+        if(N > 11) dp[11] = 6;
+        if(N > 26) dp[26] = 6;
+        if(N > 130) dp[130] = 5;
+        if(N > 146858) dp[146858] = 4;
 
         getHexNumber(N);
 
