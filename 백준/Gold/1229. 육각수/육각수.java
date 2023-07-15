@@ -40,10 +40,13 @@ public class Main {
         getHexNumber(N);
 
         for(int i = 6; i < N + 1; i++){
+            if(dp[i] > 0)
+                continue;
+
             int min = Integer.MAX_VALUE;
 
             for(int hexNum : hexNumList){
-                if(hexNum > i)
+                if(hexNum > i || min == 1)
                     break;
                 min = Math.min(min, dp[i - hexNum]);
             }
