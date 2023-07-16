@@ -19,13 +19,11 @@ public class Main {
             itemInfo[i][1] = Integer.parseInt(st.nextToken()); // 물건의 가치 V
         }
 
-        Arrays.sort(itemInfo, Comparator.comparingInt(item -> item[0]));
-
         int[][] weight = new int[N + 1][K + 1];
         for (int i = 1; i < N + 1; i++) {
             for (int j = 1; j < K + 1; j++) {
-                weight[i][j] = weight[i - 1][j];
-
+                weight[i][j] = weight[i-1][j];
+                
                 if(j - itemInfo[i][0] >= 0)
                     weight[i][j] = Math.max(weight[i][j], weight[i - 1][j - itemInfo[i][0]] + itemInfo[i][1]);
             }
