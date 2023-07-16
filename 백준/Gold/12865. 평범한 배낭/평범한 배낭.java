@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -23,7 +21,7 @@ public class Main {
         for (int i = 1; i < N + 1; i++) {
             for (int j = 1; j < K + 1; j++) {
                 weight[i][j] = weight[i-1][j];
-                
+
                 if(j - itemInfo[i][0] >= 0)
                     weight[i][j] = Math.max(weight[i][j], weight[i - 1][j - itemInfo[i][0]] + itemInfo[i][1]);
             }
