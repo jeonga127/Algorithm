@@ -29,28 +29,24 @@ public class Main {
             int itemWeight = Integer.parseInt(st.nextToken());
             int satisfaction = Integer.parseInt(st.nextToken());
             int itemTotalNum = Integer.parseInt(st.nextToken());
-            
+
             int itemNum = 1;
             while(itemNum <= itemTotalNum){
                 itemList.add(new Item(itemNum * itemWeight, itemNum * satisfaction));
                 itemTotalNum -= itemNum;
                 itemNum *= 2;
             }
-            
+
             if(itemTotalNum > 0)
                 itemList.add(new Item(itemTotalNum * itemWeight, itemTotalNum * satisfaction));
         }
 
-        int[][] memo = new int[itemList.size()][M + 1];
+        int[] memo = new int[M + 1];
         for (int item = 1; item < itemList.size(); item++) {
-            for (int weight = 1; weight < M + 1; weight++) {
-                memo[item][weight] = memo[item - 1][weight];
-
-                if (weight - itemList.get(item).weight >= 0)
-                    memo[item][weight] = Math.max(memo[item][weight], memo[item - 1][weight - itemList.get(item).weight] + itemList.get(item).satisfaction);
-            }
+            for (int weight = M; weight >= itemList.get(item).weight; weight--)
+                memo[weight] = Math.max(memo[weight], memo[weight - itemList.get(item).weight] + itemList.get(item).satisfaction);
         }
 
-        System.out.print(memo[itemList.size() - 1][M]);
+        System.out.print(memo[M]);
     }
 }
