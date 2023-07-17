@@ -21,8 +21,6 @@ public class Main {
         int M = Integer.parseInt(st.nextToken()); // 최대 무게
 
         List<Item> itemList = new ArrayList<>();
-        itemList.add(new Item(0, 0));
-
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
 
@@ -30,11 +28,9 @@ public class Main {
             int satisfaction = Integer.parseInt(st.nextToken());
             int itemTotalNum = Integer.parseInt(st.nextToken());
 
-            int itemNum = 1;
-            while(itemNum <= itemTotalNum){
+            for(int itemNum = 1; itemNum <= itemTotalNum && itemNum * itemWeight <= M; itemNum *= 2) {
                 itemList.add(new Item(itemNum * itemWeight, itemNum * satisfaction));
                 itemTotalNum -= itemNum;
-                itemNum *= 2;
             }
 
             if(itemTotalNum > 0)
@@ -42,7 +38,7 @@ public class Main {
         }
 
         int[] memo = new int[M + 1];
-        for (int item = 1; item < itemList.size(); item++) {
+        for (int item = 0; item < itemList.size(); item++) {
             for (int weight = M; weight >= itemList.get(item).weight; weight--)
                 memo[weight] = Math.max(memo[weight], memo[weight - itemList.get(item).weight] + itemList.get(item).satisfaction);
         }
