@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -19,25 +18,28 @@ public class Main {
                 map[i][j] = Integer.parseInt(st.nextToken());
         }
 
-        while (--R >= 0) {
-            int[][] answer = new int[N][M];
-            for (int standard = 0; standard < Math.min(N, M) / 2; standard++) {
-                int wLimit = M - standard - 1;
-                int hLimit = N - standard - 1;
+        for (int standard = 0; standard < Math.min(N, M) / 2; standard++) {
+            int wLimit = M - standard - 1;
+            int hLimit = N - standard - 1;
+            int realR = R;
 
-                for (int i = standard + 1; i <= wLimit; i++) // ←
-                    answer[standard][i - 1] = map[standard][i];
+            while (--realR >= 0) {
+                int tmp = map[standard][standard];
 
-                for (int i = standard + 1; i <= hLimit; i++) // ↑
-                    answer[i - 1][wLimit] = map[i][wLimit];
+                for (int i = standard; i < wLimit; i++) // ←
+                    map[standard][i] = map[standard][i + 1];
 
-                for (int i = standard; i < wLimit; i++) // →
-                    answer[hLimit][i + 1] = map[hLimit][i];
+                for (int i = standard; i < hLimit; i++) // ↑
+                    map[i][wLimit] = map[i + 1][wLimit];
 
-                for (int i = standard; i < hLimit; i++) // ↓
-                    answer[i + 1][standard] = map[i][standard];
+                for (int i = wLimit; i > standard; i--) // →
+                    map[hLimit][i] = map[hLimit][i - 1];
+
+                for (int i = hLimit; i > standard; i--) // ↓
+                    map[i][standard] = map[i - 1][standard];
+
+                map[standard + 1][standard] = tmp;
             }
-            map = answer;
         }
 
         for (int i = 0; i < N; i++) {
