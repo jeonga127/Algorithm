@@ -51,8 +51,11 @@ public class Main {
 
             int affordableNum = target.boxNum;
 
-            for(int i = target.sendTown; i < target.receiveTown; i++)
+            for(int i = target.sendTown; i < target.receiveTown; i++) {
                 affordableNum = Math.min(affordableNum, weights[i]);
+                
+                if(affordableNum <= 0) break;
+            }
 
             if(affordableNum > 0){
                 for(int i = target.sendTown; i < target.receiveTown; i++)
