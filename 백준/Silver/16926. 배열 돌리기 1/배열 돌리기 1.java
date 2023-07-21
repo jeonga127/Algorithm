@@ -21,7 +21,7 @@ public class Main {
         for (int standard = 0; standard < Math.min(N, M) / 2; standard++) {
             int wLimit = M - standard - 1;
             int hLimit = N - standard - 1;
-            int realR = R;
+            int realR = R % (2 * (wLimit + hLimit - 2 * standard));
 
             while (--realR >= 0) {
                 int tmp = map[standard][standard];
