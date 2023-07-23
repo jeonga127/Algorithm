@@ -73,6 +73,9 @@ public class Main {
         }
 
         Arrays.sort(computers, Comparator.comparingLong(computer -> -computer.money));
-        System.out.print(IntStream.range(0, hackNum).mapToLong(idx->computers[idx].money).sum());
+        long answer = 0;
+        for(int i =0; i < hackNum; i++)
+            answer += computers[i].money;
+        System.out.print(answer);
     }
 }
