@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.stream.IntStream;
 
 class Computer {
     long money;
@@ -24,7 +25,6 @@ public class Main {
         int securityNum = Integer.parseInt(st.nextToken());
 
         st = new StringTokenizer(br.readLine());
-        boolean[] visited = new boolean[computerNum + 1];
 
         Computer[] computers = new Computer[computerNum + 1];
         computers[0] = new Computer(-1, -1);
@@ -50,37 +50,29 @@ public class Main {
             int node = Integer.parseInt(st.nextToken());
 
             computers[node].time = 0;
-            visited[node] = true;
             queue.add(node);
         }
 
         while (!queue.isEmpty()) {
             int target = queue.poll();
+            computers[target].money *= computers[target].time;
 
             for (int next : graph[target]) {
-                if (!visited[next]) {
+                if (computers[next].time == Integer.MAX_VALUE) {
                     computers[next].time = computers[target].time + 1;
-                    visited[next] = true;
                     queue.add(next);
                 }
             }
         }
 
         for(int i = 1; i < computerNum + 1; i++) {
-            if(!visited[i] && computers[i].money > 0){
+            if(computers[i].time == Integer.MAX_VALUE && computers[i].money > 0){
                 System.out.print(-1);
                 return;
             }
-
-            computers[i].money *= computers[i].time;
         }
 
         Arrays.sort(computers, Comparator.comparingLong(computer -> -computer.money));
-
-        long answer = 0;
-        for(int i = 0; i < hackNum; i++)
-            answer += computers[i].money;
-
-        System.out.print(answer);
+        System.out.print(IntStream.range(0, hackNum).mapToLong(idx->computers[idx].money).sum());
     }
 }
