@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -9,35 +8,16 @@ public class Main {
         String target = br.readLine();
         String bomb = br.readLine();
 
-        Stack<Character> stack = new Stack<>();
-        Stack<Character> temp = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < target.length(); i++){
+            sb.append(target.charAt(i));
 
-        for (int i = 0; i < target.length(); i++) {
-            stack.push(target.charAt(i));
-
-            if (stack.size() >= bomb.length() && target.charAt(i) == bomb.charAt(bomb.length() - 1)) {
-                boolean isSame = true;
-
-                for (int j = bomb.length() - 1; j >= 0; j--) {
-                    temp.push(stack.pop());
-
-                    if (temp.peek() != bomb.charAt(j)) {
-                        isSame = false;
-                        break;
-                    }
-                }
-
-                if (!isSame) {
-                    while (!temp.isEmpty())
-                        stack.push(temp.pop());
-                } else temp.clear();
+            if(sb.length() >= bomb.length()){
+                if(sb.substring(sb.length() - bomb.length(), sb.length()).equals(bomb))
+                    sb.delete(sb.length() - bomb.length(), sb.length());
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty())
-            sb.append(stack.pop());
-
-        System.out.print(sb.length() == 0 ? "FRULA" : sb.reverse());
+        System.out.print(sb.length() == 0 ? "FRULA" : sb);
     }
 }
