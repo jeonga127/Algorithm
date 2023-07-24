@@ -9,11 +9,11 @@ public class Main {
         String bomb = br.readLine();
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < target.length(); i++){
+        for (int i = 0; i < target.length(); i++) {
             sb.append(target.charAt(i));
 
-            if(sb.length() >= bomb.length()){
-                if(sb.substring(sb.length() - bomb.length(), sb.length()).equals(bomb))
+            if (sb.length() >= bomb.length() && target.charAt(i) == bomb.charAt(bomb.length() - 1)) {
+                if (sb.substring(sb.length() - bomb.length(), sb.length()).equals(bomb))
                     sb.delete(sb.length() - bomb.length(), sb.length());
             }
         }
