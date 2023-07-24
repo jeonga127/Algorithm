@@ -13,7 +13,16 @@ public class Main {
             sb.append(target.charAt(i));
 
             if (sb.length() >= bomb.length() && target.charAt(i) == bomb.charAt(bomb.length() - 1)) {
-                if (sb.substring(sb.length() - bomb.length(), sb.length()).equals(bomb))
+                boolean isSame = true;
+
+                for(int j = 0; j < bomb.length(); j++){
+                    if(sb.charAt(sb.length() - bomb.length() + j) != bomb.charAt(j)){
+                        isSame = false;
+                        break;
+                    }
+                }
+
+                if (isSame)
                     sb.delete(sb.length() - bomb.length(), sb.length());
             }
         }
