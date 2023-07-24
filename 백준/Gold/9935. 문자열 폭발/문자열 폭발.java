@@ -10,23 +10,27 @@ public class Main {
         String bomb = br.readLine();
 
         Stack<Character> stack = new Stack<>();
+        Stack<Character> temp = new Stack<>();
+
         for (int i = 0; i < target.length(); i++) {
             stack.push(target.charAt(i));
 
             if (stack.size() >= bomb.length() && target.charAt(i) == bomb.charAt(bomb.length() - 1)) {
                 boolean isSame = true;
 
-                for (int j = 0; j < bomb.length(); j++) {
-                    if (stack.get(stack.size() - bomb.length() + j) != bomb.charAt(j)) {
+                for (int j = bomb.length() - 1; j >= 0; j--) {
+                    temp.push(stack.pop());
+
+                    if (temp.peek() != bomb.charAt(j)) {
                         isSame = false;
                         break;
                     }
                 }
 
-                if (isSame) {
-                    for (int j = bomb.length() - 1; j >= 0; j--)
-                        stack.pop();
-                }
+                if (!isSame) {
+                    while (!temp.isEmpty())
+                        stack.push(temp.pop());
+                } else temp.clear();
             }
         }
 
